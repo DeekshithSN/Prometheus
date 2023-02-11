@@ -7,3 +7,11 @@ docker run -d --name prometheus-container -v /home/sndee/prometheus.yml:/etc/pro
 ```
 
 Note:- For more info [prometheus](https://hub.docker.com/r/ubuntu/prometheus)
+
+#### 1. Grafana
+
+```
+docker run -d --name=grafana -p 3000:3000 grafana/grafana
+```
+
+Note:- For more info [prometheus](https://hub.docker.com/r/grafana/grafana)
