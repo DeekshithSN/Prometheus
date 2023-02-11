@@ -22,11 +22,13 @@ Note:- For more info [prometheus](https://hub.docker.com/r/grafana/grafana)
 docker run -d -p 8086:8086 --name influxdb2 influxdb:1.8.6-alpine
 ```
 
-**Influx Commands**
+**Connect to container and execute below Influx Commands**
 ```
+docker exec -it influxdb2 bash 
+influx
 CREATE DATABASE "jenkins" WITH DURATION 1825d REPLICATION 1 NAME "jenkins-retention"
-
+SHOW DATABASES
+USE <database_name>
 ```
-
 
 ![image](https://user-images.githubusercontent.com/29688323/218266342-da04d428-5e2f-4986-a68e-1d3789046eb5.png)
