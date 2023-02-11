@@ -8,10 +8,25 @@ docker run -d --name prometheus-container -v /home/sndee/prometheus.yml:/etc/pro
 
 Note:- For more info [prometheus](https://hub.docker.com/r/ubuntu/prometheus)
 
-#### 1. Grafana
+#### 2. Grafana
 
 ```
 docker run -d --name=grafana -p 3000:3000 grafana/grafana
 ```
 
 Note:- For more info [prometheus](https://hub.docker.com/r/grafana/grafana)
+
+#### 3. InfluxDb
+
+```
+docker run -d -p 8086:8086 --name influxdb2 influxdb:1.8.6-alpine
+```
+
+**Influx Commands**
+```
+CREATE DATABASE "jenkins" WITH DURATION 1825d REPLICATION 1 NAME "jenkins-retention"
+
+```
+
+
+![image](https://user-images.githubusercontent.com/29688323/218266342-da04d428-5e2f-4986-a68e-1d3789046eb5.png)
