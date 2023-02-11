@@ -36,6 +36,118 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "Success",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "KhdaDZJ4k"
+          },
+          "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'SUCCESS' OR \"build_result\" = 'CompletedSuccess' ) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "Failure",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "KhdaDZJ4k"
+          },
+          "hide": false,
+          "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'FAILURE' OR \"build_result\" = 'CompletedError' ) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Overall",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "KhdaDZJ4k"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "thresholds"
           },
           "mappings": [],
@@ -58,7 +170,7 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
+        "x": 12,
         "y": 0
       },
       "id": 2,
@@ -84,7 +196,7 @@
             "uid": "KhdaDZJ4k"
           },
           "hide": false,
-          "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE $timeFilter",
+          "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND $timeFilter ",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series"
@@ -111,12 +223,36 @@
         },
         "definition": "SHOW TAG VALUES FROM job WITH KEY = \"owner\"",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "folder",
         "multi": false,
         "name": "folder",
         "options": [],
         "query": "SHOW TAG VALUES FROM job WITH KEY = \"owner\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "test-influx",
+          "value": "test-influx"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "KhdaDZJ4k"
+        },
+        "definition": "SHOW TAG VALUES FROM job WITH KEY = repo WHERE \"owner\" =~ /^($folder)$/",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Job",
+        "multi": false,
+        "name": "job",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM job WITH KEY = repo WHERE \"owner\" =~ /^($folder)$/",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -133,6 +269,6 @@
   "timezone": "",
   "title": "build details",
   "uid": "KaLaOWJ4z",
-  "version": 3,
+  "version": 9,
   "weekStart": ""
 }
