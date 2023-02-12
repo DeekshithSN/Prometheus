@@ -354,8 +354,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "KhdaDZJ4k"
+        "type": "prometheus",
+        "uid": "X6s-nWJ4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -367,16 +367,26 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "fillOpacity": 80,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "lineInterpolation": "linear",
             "lineWidth": 1,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -407,40 +417,56 @@
       },
       "id": 9,
       "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
         },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "none",
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        }
       },
-      "pluginVersion": "9.3.6",
       "targets": [
         {
           "datasource": {
-            "type": "influxdb",
-            "uid": "KhdaDZJ4k"
+            "type": "prometheus",
+            "uid": "X6s-nWJ4k"
           },
-          "query": "SELECT \"stagetime\",\"jobname\" FROM \"stage\" WHERE (\"owner\" =~ /^$folder$/ AND \"repo\" =~ /^$job$/) AND $timeFilter GROUP BY \"stagename\",\"jobname\"",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series"
+          "editorMode": "code",
+          "expr": "jenkins_executor_count_value{job=\"jenkins\"}",
+          "legendFormat": "Executor Count",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X6s-nWJ4k"
+          },
+          "editorMode": "code",
+          "expr": "jenkins_node_count_value{job=\"jenkins\"}",
+          "hide": false,
+          "legendFormat": "Node Count",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "X6s-nWJ4k"
+          },
+          "editorMode": "code",
+          "expr": "jenkins_queue_size_value{job=\"jenkins\"}",
+          "hide": false,
+          "legendFormat": "Queue Size",
+          "range": true,
+          "refId": "C"
         }
       ],
       "title": "Panel Title",
-      "type": "barchart"
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -699,7 +725,12 @@
         },
         "frameIndex": 4,
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Build No"
+          }
+        ]
       },
       "pluginVersion": "9.3.6",
       "targets": [
@@ -732,9 +763,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": "ui-app",
+          "value": "ui-app"
         },
         "datasource": {
           "type": "influxdb",
@@ -756,9 +787,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": "ci-pull-request",
+          "value": "ci-pull-request"
         },
         "datasource": {
           "type": "influxdb",
@@ -781,13 +812,13 @@
     ]
   },
   "time": {
-    "from": "2023-02-12T00:42:03.302Z",
-    "to": "2023-02-13T00:42:03.302Z"
+    "from": "now-3h",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "build details",
   "uid": "KaLaOWJ4z",
-  "version": 23,
+  "version": 24,
   "weekStart": ""
 }
