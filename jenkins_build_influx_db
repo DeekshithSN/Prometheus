@@ -24,14 +24,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "KhdaDZJ4k"
+        "uid": "lHrDKyJ4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -148,18 +148,49 @@
           "alias": "Success",
           "datasource": {
             "type": "influxdb",
-            "uid": "KhdaDZJ4k"
+            "uid": "lHrDKyJ4k"
           },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
           "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'SUCCESS' OR \"build_result\" = 'CompletedSuccess' ) AND $timeFilter ",
           "rawQuery": true,
           "refId": "A",
-          "resultFormat": "time_series"
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         },
         {
           "alias": "Failure",
           "datasource": {
             "type": "influxdb",
-            "uid": "KhdaDZJ4k"
+            "uid": "lHrDKyJ4k"
           },
           "hide": false,
           "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'FAILURE' OR \"build_result\" = 'CompletedError' ) AND $timeFilter ",
@@ -171,7 +202,7 @@
           "alias": "Aborted",
           "datasource": {
             "type": "influxdb",
-            "uid": "KhdaDZJ4k"
+            "uid": "lHrDKyJ4k"
           },
           "hide": false,
           "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'ABORTED' OR \"build_result\" = 'Aborted' ) AND $timeFilter ",
@@ -183,7 +214,7 @@
           "alias": "Unstable",
           "datasource": {
             "type": "influxdb",
-            "uid": "KhdaDZJ4k"
+            "uid": "lHrDKyJ4k"
           },
           "hide": false,
           "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'UNSTABLE' OR \"build_result\" = 'Unstable' ) AND $timeFilter ",
@@ -198,7 +229,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "KhdaDZJ4k"
+        "uid": "lHrDKyJ4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -248,13 +279,44 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "KhdaDZJ4k"
+            "uid": "lHrDKyJ4k"
           },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
           "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
           "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND $timeFilter ",
           "rawQuery": true,
           "refId": "A",
-          "resultFormat": "time_series"
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Total Builds",
@@ -263,7 +325,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "KhdaDZJ4k"
+        "uid": "lHrDKyJ4k"
       },
       "description": "",
       "fieldConfig": {
@@ -340,7 +402,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "KhdaDZJ4k"
+            "uid": "lHrDKyJ4k"
           },
           "hide": false,
           "query": "SELECT build_result FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND $timeFilter  ORDER BY time DESC LIMIT 1",
@@ -471,7 +533,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "KhdaDZJ4k"
+        "uid": "lHrDKyJ4k"
       },
       "description": "",
       "fieldConfig": {
@@ -550,12 +612,13 @@
                 "value": [
                   {
                     "options": {
-                      "/(\\/)/g": {
+                      "pattern": "/(\\/)/g",
+                      "result": {
                         "index": 0,
                         "text": "/job$1"
                       }
                     },
-                    "type": "value"
+                    "type": "regex"
                   }
                 ]
               },
@@ -564,8 +627,8 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "",
-                    "url": "http://34.125.82.16:8080/job/${__data.fields[\"jenkins_data.project_path\"]: percentencode}/${__data.fields[\"jenkins_data.build_number\"]: percentencode}"
+                    "title": "Jenkins URL",
+                    "url": "http://34.125.50.98:8080/job/${__data.fields[\"jenkins_data.project_path\"]: percentencode}/${__data.fields[\"jenkins_data.build_number\"]: percentencode}"
                   }
                 ]
               }
@@ -580,18 +643,6 @@
               {
                 "id": "displayName",
                 "value": "Started by"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Started by"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 191
               }
             ]
           },
@@ -624,30 +675,6 @@
               {
                 "id": "unit",
                 "value": "clockms"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Jenkins URL"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 162
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Build Time"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 132
               }
             ]
           },
@@ -701,7 +728,11 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 238
+                "value": 132
+              },
+              {
+                "id": "custom.hidden",
+                "value": true
               }
             ]
           }
@@ -737,12 +768,43 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "KhdaDZJ4k"
+            "uid": "lHrDKyJ4k"
           },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
           "query": "SELECT \"build_exec_time\",\"project_path\",\"build_number\",\"build_causer\",\"build_time\",\"build_result\" FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND $timeFilter ",
           "rawQuery": true,
           "refId": "A",
-          "resultFormat": "time_series"
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "title": "Builds Details ",
@@ -764,12 +826,12 @@
       {
         "current": {
           "selected": true,
-          "text": "ui-app",
-          "value": "ui-app"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "influxdb",
-          "uid": "KhdaDZJ4k"
+          "uid": "lHrDKyJ4k"
         },
         "definition": "SHOW TAG VALUES FROM job WITH KEY = \"owner\"",
         "hide": 0,
@@ -788,12 +850,12 @@
       {
         "current": {
           "selected": true,
-          "text": "ci-pull-request",
-          "value": "ci-pull-request"
+          "text": "sample-web-app-pull-request",
+          "value": "sample-web-app-pull-request"
         },
         "datasource": {
           "type": "influxdb",
-          "uid": "KhdaDZJ4k"
+          "uid": "lHrDKyJ4k"
         },
         "definition": "SHOW TAG VALUES FROM job WITH KEY = repo WHERE \"owner\" =~ /^($folder)$/",
         "hide": 0,
@@ -819,6 +881,6 @@
   "timezone": "",
   "title": "build details",
   "uid": "KaLaOWJ4z",
-  "version": 24,
+  "version": 6,
   "weekStart": ""
 }
