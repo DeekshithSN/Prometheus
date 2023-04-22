@@ -11,7 +11,7 @@ Note:- For more info [prometheus](https://hub.docker.com/r/ubuntu/prometheus)
 #### 2. Grafana
 
 ```
-docker run -d --name=grafana -p 3000:3000 grafana/grafana
+docker run -d --name=grafana -p 3000:3000 grafana/grafana:8.5.5
 ```
 
 Note:- For more info [prometheus](https://hub.docker.com/r/grafana/grafana)
