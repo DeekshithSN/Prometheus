@@ -14,7 +14,7 @@ Note:- For more info [prometheus](https://hub.docker.com/r/ubuntu/prometheus)
 docker run -d --name=grafana -p 3000:3000 grafana/grafana:8.5.5
 ```
 
-Note:- For more info [prometheus](https://hub.docker.com/r/grafana/grafana)
+Note:- For more info [Grafana](https://hub.docker.com/r/grafana/grafana)
 
 #### 3. InfluxDb
 
