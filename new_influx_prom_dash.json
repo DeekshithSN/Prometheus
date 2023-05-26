@@ -24,38 +24,22 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1682137647769,
+  "id": 2,
+  "iteration": 1685113387859,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ZrhmIEE4z"
+        "uid": "1YG0AcQ4k"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "dark-red",
-                  "index": 1,
-                  "text": "Down"
-                },
-                "1": {
-                  "color": "dark-green",
-                  "index": 0,
-                  "text": "up"
-                }
-              },
-              "type": "value"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -70,26 +54,58 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "up{instance=\"34.125.42.68:8080\", job=\"jenkins\"}"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "dark-red",
+                        "index": 1,
+                        "text": "DOWN"
+                      },
+                      "1": {
+                        "color": "dark-green",
+                        "index": 0,
+                        "text": "UP"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 6,
         "x": 0,
         "y": 0
       },
-      "id": 11,
+      "id": 17,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^up\\{instance=\"34\\.125\\.231\\.146:8080\", job=\"jenkins\"\\}$/",
+          "fields": "",
           "values": false
+        },
+        "text": {
+          "titleSize": 1
         },
         "textMode": "auto"
       },
@@ -98,19 +114,19 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ZrhmIEE4z"
+            "uid": "1YG0AcQ4k"
           },
-          "expr": "up{instance=\"34.125.231.146:8080\", job=\"jenkins\"}",
+          "expr": "up{instance=\"34.125.42.68:8080\", job=\"jenkins\"}",
           "refId": "A"
         }
       ],
-      "title": "Jenkins status",
+      "title": "Jenkins Health",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ZrhmIEE4z"
+        "uid": "1YG0AcQ4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -185,7 +201,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ZrhmIEE4z"
+            "uid": "1YG0AcQ4k"
           },
           "editorMode": "code",
           "expr": "jenkins_executor_count_value{job=\"jenkins\"}",
@@ -196,7 +212,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ZrhmIEE4z"
+            "uid": "1YG0AcQ4k"
           },
           "editorMode": "code",
           "expr": "jenkins_node_count_value{job=\"jenkins\"}",
@@ -208,7 +224,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ZrhmIEE4z"
+            "uid": "1YG0AcQ4k"
           },
           "editorMode": "code",
           "expr": "jenkins_queue_size_value{job=\"jenkins\"}",
@@ -224,7 +240,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "K1HWSPP4k"
+        "uid": "v7kJAcQ4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -341,7 +357,7 @@
           "alias": "Success",
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "groupBy": [
             {
@@ -383,7 +399,7 @@
           "alias": "Failure",
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "hide": false,
           "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'FAILURE' OR \"build_result\" = 'CompletedError' ) AND $timeFilter ",
@@ -395,7 +411,7 @@
           "alias": "Aborted",
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "hide": false,
           "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'ABORTED' OR \"build_result\" = 'Aborted' ) AND $timeFilter ",
@@ -407,7 +423,7 @@
           "alias": "Unstable",
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "hide": false,
           "query": "SELECT count(build_number) FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND (\"build_result\" = 'UNSTABLE' OR \"build_result\" = 'Unstable' ) AND $timeFilter ",
@@ -422,7 +438,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "K1HWSPP4k"
+        "uid": "v7kJAcQ4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -472,7 +488,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "groupBy": [
             {
@@ -518,7 +534,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "K1HWSPP4k"
+        "uid": "v7kJAcQ4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -568,7 +584,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "groupBy": [
             {
@@ -614,7 +630,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "K1HWSPP4k"
+        "uid": "v7kJAcQ4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -662,7 +678,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "groupBy": [
             {
@@ -708,7 +724,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "K1HWSPP4k"
+        "uid": "v7kJAcQ4k"
       },
       "description": "",
       "fieldConfig": {
@@ -785,7 +801,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "hide": false,
           "query": "SELECT build_result FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND $timeFilter  ORDER BY time DESC LIMIT 1",
@@ -800,7 +816,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "K1HWSPP4k"
+        "uid": "v7kJAcQ4k"
       },
       "description": "",
       "fieldConfig": {
@@ -889,7 +905,7 @@
                   {
                     "targetBlank": true,
                     "title": "",
-                    "url": "http://34.125.231.146:8080/job/${__data.fields[\"jenkins_data.project_path\"]}﻿/job/${__data.fields[\"jenkins_data.build_number\"]}"
+                    "url": "http://34.125.42.68:8080/job/${__data.fields[\"jenkins_data.project_path\"]}﻿/${__data.fields[\"jenkins_data.build_number\"]}"
                   }
                 ]
               },
@@ -1061,7 +1077,7 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "K1HWSPP4k"
+            "uid": "v7kJAcQ4k"
           },
           "query": "SELECT \"build_exec_time\",\"project_path\",\"build_number\",\"build_causer\",\"build_time\",\"build_result\" FROM \"jenkins_data\" WHERE (\"project_name\" =~ /^(?i)$job$/ AND \"project_path\" =~ /.*(?i)$folder.*$/) AND $timeFilter ",
           "rawQuery": true,
@@ -1077,6 +1093,187 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "1YG0AcQ4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 1,
+        "y": 27
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "1YG0AcQ4k"
+          },
+          "expr": "jenkins_plugins_active",
+          "refId": "A"
+        }
+      ],
+      "title": "Number active plugins",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "1YG0AcQ4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 8,
+        "y": 27
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "1YG0AcQ4k"
+          },
+          "expr": "jenkins_plugins_inactive",
+          "refId": "A"
+        }
+      ],
+      "title": "Number active plugins",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "1YG0AcQ4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 15,
+        "y": 27
+      },
+      "id": 21,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "1YG0AcQ4k"
+          },
+          "expr": "jenkins_plugins_inactive",
+          "refId": "A"
+        }
+      ],
+      "title": "Number active plugins",
+      "type": "stat"
     }
   ],
   "refresh": false,
@@ -1088,12 +1285,12 @@
       {
         "current": {
           "selected": true,
-          "text": "All",
-          "value": "$__all"
+          "text": "call-booking-user",
+          "value": "call-booking-user"
         },
         "datasource": {
           "type": "influxdb",
-          "uid": "K1HWSPP4k"
+          "uid": "v7kJAcQ4k"
         },
         "definition": "SHOW TAG VALUES FROM job WITH KEY = \"owner\"",
         "hide": 0,
@@ -1111,15 +1308,18 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
         "datasource": {
           "type": "influxdb",
-          "uid": "K1HWSPP4k"
+          "uid": "v7kJAcQ4k"
         },
         "definition": "SHOW TAG VALUES FROM job WITH KEY = repo WHERE \"owner\" =~ /^($folder)$/",
+        "error": {
+          "message": "Failed to fetch"
+        },
         "hide": 0,
         "includeAll": true,
         "label": "Job",
@@ -1136,13 +1336,13 @@
     ]
   },
   "time": {
-    "from": "now-3h",
-    "to": "now"
+    "from": "2023-05-23T15:08:42.192Z",
+    "to": "2023-05-27T15:08:42.194Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "build details",
   "uid": "KaLaOWJ4z",
-  "version": 10,
+  "version": 12,
   "weekStart": ""
 }
