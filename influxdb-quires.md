@@ -1,3 +1,10 @@
+## Dropdown 
+
+```
+SHOW TAG VALUES FROM job WITH KEY = "owner"
+SHOW TAG VALUES FROM job WITH KEY = repo WHERE "owner" =~ /^($folder)$/
+```
+
 ## Overall Panel 
 
 query to get success build count 
