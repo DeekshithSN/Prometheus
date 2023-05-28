@@ -54,4 +54,4 @@ SELECT "build_exec_time","project_path","build_number","build_causer","build_tim
 ```
 ``` http://34.125.42.68:8080/job/${__data.fields["jenkins_data.project_path"]}﻿/${__data.fields["jenkins_data.build_number"]}```
 
-regex /(\/)/g --> /job$1
+regex ```/(\/)/g --> /job$1```
