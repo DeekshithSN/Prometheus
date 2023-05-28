@@ -52,3 +52,6 @@ SELECT build_result FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AN
 ```
 SELECT "build_exec_time","project_path","build_number","build_causer","build_time","build_result" FROM "jenkins_data" WHERE ("project_name" =~ /^(?i)$job$/ AND "project_path" =~ /.*(?i)$folder.*$/) AND $timeFilter 
 ```
+``` http://34.125.42.68:8080/job/${__data.fields["jenkins_data.project_path"]}﻿/${__data.fields["jenkins_data.build_number"]}```
+
+regex /(\/)/g --> /job$1
