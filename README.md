@@ -43,7 +43,7 @@ docker run -d --name prometheus-container -v /home/sndee/prometheus.yml:/etc/pro
 ```
 
 ```
-SELECT count(build_number) FROM ( SELECT * FROM  "jenkins_data" WHERE ("project_name" =~ /^(?i)admin-api$/ AND "project_path" =~ /.*(?i)admin.*$/) ORDER BY time DESC LIMIT 10 ) WHERE ("build_result" = 'FAILURE' OR "build_result" = 'CompletedError' )
+SELECT count(build_number) FROM ( SELECT * FROM  "jenkins_data" WHERE ("project_name" =~ /^(?i)admin-api$/ AND "project_path" =~ /.*(?i)admin.*$/) ORDER BY time DESC LIMIT 10 ) WHERE ("build_result" = 'FAILURE' OR "build_result" = 'CompletedError' ) ORDER BY time DESC
 ```
 
 ```
