@@ -21,6 +21,11 @@ Note:- For more info [Grafana](https://hub.docker.com/r/grafana/grafana)
 ```
 docker run -d -p 8086:8086 --name influxdb2 influxdb:1.8.6-alpine
 ```
+#### 4. Jenkins 
+
+```
+docker run -d -p 8080:8080  jenkins/jenkins:lts-jdk11
+```
 
 **Connect to container and execute below Influx Commands**
 ```
