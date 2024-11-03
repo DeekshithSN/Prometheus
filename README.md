@@ -3,7 +3,7 @@ To bring up monitoring stack using docker
 #### 1. Prometheus
 
 ```
-docker run -d --name prometheus-container -v /home/sndee/prometheus.yml:/etc/prometheus/prometheus.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
+docker run -d --name prometheus-container -v /home/ubuntu/prometheus.yml:/etc/prometheus/prometheus.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
 ```
 
 Note:- For more info [prometheus](https://hub.docker.com/r/ubuntu/prometheus)
@@ -35,11 +35,11 @@ USE <database_name>
 
 **Alerts**
 ```
-docker run -d --name prometheus-alertmanager-container -e TZ=UTC -v /home/sndee/alertmanager.yml:/etc/alertmanager/alertmanager.yml -p 9093:9093 ubuntu/prometheus-alertmanager:0.23-22.04_beta
+docker run -d --name prometheus-alertmanager-container -e TZ=UTC -v /home/ubuntu/alertmanager.yml:/etc/alertmanager/alertmanager.yml -p 9093:9093 ubuntu/prometheus-alertmanager:0.23-22.04_beta
 ```
 
 ```
-docker run -d --name prometheus-container -v /home/sndee/prometheus.yml:/etc/prometheus/prometheus.yml -v /home/sndee/prometheus_rules.yml:/etc/prometheus/prometheus_rules.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
+docker run -d --name prometheus-container -v /home/ubuntu/prometheus.yml:/etc/prometheus/prometheus.yml -v /home/sndee/prometheus_rules.yml:/etc/prometheus/prometheus_rules.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
 ```
 
 ```
