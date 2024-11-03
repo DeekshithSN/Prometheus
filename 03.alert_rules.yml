@@ -1,0 +1,19 @@
+groups:
+  - name: alert_rules
+    rules:
+      - alert: JenkinsDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance [{{ $labels.instance }}] down"
+          description: "[{{ $labels.instance }}] of job [{{ $labels.job }}] has been down for more than 1 minute."
+      - alert: QueueIsHigh
+        expr: jenkins_queue_size_value > 10
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Jenkins queue is high"
+          description: "Jenkins queue is high"
