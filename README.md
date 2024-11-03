@@ -44,7 +44,7 @@ docker run -d --name prometheus-alertmanager-container -e TZ=UTC -v /home/ubuntu
 ```
 
 ```
-docker run -d --name prometheus-container -v /home/ubuntu/prometheus.yml:/etc/prometheus/prometheus.yml -v /home/sndee/prometheus_rules.yml:/etc/prometheus/prometheus_rules.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
+docker run -d --name prometheus-container -v /home/ubuntu/prometheus.yml:/etc/prometheus/prometheus.yml -v /home/ubuntu/prometheus_rules.yml:/etc/prometheus/prometheus_rules.yml -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2.33-22.04_beta
 ```
 
 ```
@@ -52,6 +52,6 @@ SELECT count(build_number) FROM ( SELECT * FROM  "jenkins_data" WHERE ("project_
 ```
 
 ```
-docker run -d --name=grafana -p 3000:3000 -v /home/sndee/grafana.ini:/etc/grafana/grafana.ini grafana/grafana:8.5.5
+docker run -d --name=grafana -p 3000:3000 -v /home/ubuntu/grafana.ini:/etc/grafana/grafana.ini grafana/grafana:8.5.5
 ```
 
